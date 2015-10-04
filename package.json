@@ -1,6 +1,6 @@
 {
   "name": "browser-downloader",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Utility to download the latest browser builds",
   "main": "index.js",
   "scripts": {
