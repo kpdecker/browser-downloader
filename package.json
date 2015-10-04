@@ -21,5 +21,17 @@
   "bugs": {
     "url": "https://github.com/kpdecker/nightly-downloader-webkit/issues"
   },
-  "homepage": "https://github.com/kpdecker/nightly-downloader-webkit#readme"
+  "homepage": "https://github.com/kpdecker/nightly-downloader-webkit#readme",
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "gulp": "^3.9.0",
+    "linoleum": "projectrecall/linoleum",
+    "sinon": "^1.17.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "recall"
+    ],
+    "root": true
+  }
 }
