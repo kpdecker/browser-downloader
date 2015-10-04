@@ -1,6 +1,12 @@
-# nightly-downloader-webkit
+# browser-downloader
 
-Webkit nightly downloader
+Utility to download the latest browser builds
 
-Scrapes the webkit nightly website to download and install the latest Webkit binaries.
+Downloads the latest and nightly version of browser builds.
 Intended for use with cron scripts and other tasks to automate deployment.
+
+## Usage
+
+```
+$ browser-downloader targetDir
+```

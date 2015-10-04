@@ -2,7 +2,7 @@
 var Downloader = require('../lib');
 
 if (process.argv.length !== 3) {
-  console.log('Usage: nightly-webkit-downloader applicationPath');
+  console.log('Usage: browser-downloader targetDir');
   console.log(process.argv);
   process.exit(1);
 }
