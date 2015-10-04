@@ -1,8 +1,10 @@
 {
   "name": "browser-downloader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility to download the latest browser builds",
-  "bin" : { "browser-downloader" : "./bin/downloader.js" },
+  "bin": {
+    "browser-downloader": "./bin/downloader.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
