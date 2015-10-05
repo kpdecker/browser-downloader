@@ -53,7 +53,7 @@ describe('downloader', function() {
   it('should extract package', function() {
     path = temp.mkdirSync({suffix: '.download'});
     return Downloader.extract(`${__dirname}/artifacts/disk.dmg`, path)
-        .then(() => expect(fs.existsSync(`${path}/file.txt`)).to.be.true)
-        .then(() => expect(fs.existsSync(`${path}/dir/sub/file.txt`)).to.be.true);
+        .then(() => expect(fs.existsSync(`${path}/The App.app/file.txt`)).to.be.true)
+        .then(() => expect(fs.existsSync(`${path}/The App.app/sub/file.txt`)).to.be.true);
   });
 });

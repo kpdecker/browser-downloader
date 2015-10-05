@@ -4,7 +4,6 @@ import 'isomorphic-fetch';
 import cheerio from 'cheerio';
 import fs from 'fs';
 import Dmg from 'dmg';
-import {ncp} from 'ncp';
 import glob from 'glob';
 import {basename, join, relative} from 'path';
 import {exec} from 'child_process';
@@ -147,9 +146,7 @@ export function cleanup(source, destination) {
 
 export function copy(volume, destination) {
   return new Promise((resolve, reject) => {
-    ncp(volume, destination, {stopOnError: true, filter(name) {
-        return !(/\/ $|\/\.Trashes|\/\.fseventsd|\/\.background|\.VolumeIcon.icns/.test(name));
-      }}, function(err) {
+    exec(`cp -r "${volume}"/*.app "${destination}"`, function(err) {
       /* istanbul ignore if */
       if (err) {
         reject(err);
