@@ -5,9 +5,9 @@ import cheerio from 'cheerio';
 import fs from 'fs';
 import Dmg from 'dmg';
 import {ncp} from 'ncp';
-import rimraf from 'rimraf';
 import glob from 'glob';
 import {basename, join, relative} from 'path';
+import {exec} from 'child_process';
 
 /* istanbul ignore next: Too slow and too many external dependencies for unit testing */
 export default function(destination) {
@@ -125,16 +125,16 @@ export function unmount(volume) {
 
 export function cleanup(source, destination) {
   return Promise.all(
-    glob.sync(join(source, '*')).map((file) => {
+    glob.sync(join(source, '*.app')).map((file) => {
       file = relative(source, file);
 
       return new Promise((resolve, reject) => {
         let toRemove = JSON.stringify(join(destination, file));
         console.log(`Removing ${toRemove}`);
-        rimraf(toRemove, function(err) {
+        exec(`rm -rf "${toRemove}"`, function(err) {
           /* istanbul ignore if */
           if (err) {
-            return reject(err);
+            reject(err);
           } else {
             resolve();
           }
