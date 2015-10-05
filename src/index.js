@@ -146,7 +146,7 @@ export function cleanup(source, destination) {
 
 export function copy(volume, destination) {
   return new Promise((resolve, reject) => {
-    exec(`cp -r "${volume}"/*.app "${destination}"`, function(err) {
+    exec(`cp -a "${volume}"/*.app "${destination}"`, function(err) {
       /* istanbul ignore if */
       if (err) {
         reject(err);
