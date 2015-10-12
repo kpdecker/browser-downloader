@@ -23,6 +23,23 @@ export function findNightlyWebkit() {
       });
 }
 
+export function findEdgeVM() {
+  return fetch('https://dev.modern.ie/api/tools/vms/')
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        let vmWare = json.softwareList.find((vm) => vm.softwareName === 'VMware'),
+            edge = vmWare.vms.find((vm) => vm.version === 'msedge'),
+            file = edge.files.find((file) => (/\.zip$/).test(file.name));
+        return {
+          build: edge.build,
+          url: file.url
+        };
+      });
+}
+
+
 function loadDOM(url) {
   return fetch(url)
       .then((response) => {
