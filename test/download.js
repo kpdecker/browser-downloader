@@ -32,4 +32,43 @@ describe('downloader', function() {
         .then(() => { throw new Error('failed'); })
         .catch((err) => expect(err).to.match(/500/));
   });
+
+  it('should download if build does not exist', function() {
+    path = temp.mkdirSync({suffix: '.html'});
+    return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
+        .then(() => {
+          let content = fs.readFileSync(`${path}/nightly.webkit.org`);
+          expect(content).to.match(/<html/);
+
+          content = fs.readFileSync(`${path}/nightly.webkit.org.build`, 'utf8');
+          expect(content).to.equal('1');
+        });
+  });
+
+  it('should not download if build is the same', function() {
+    path = temp.mkdirSync({suffix: '.html'});
+    fs.writeFileSync(`${path}/nightly.webkit.org.build`, '1');
+
+    return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
+        .then(() => {
+          expect(fs.existsSync(`${path}/nightly.webkit.org`)).to.be.false;
+
+          let content = fs.readFileSync(`${path}/nightly.webkit.org.build`, 'utf8');
+          expect(content).to.equal('1');
+        });
+  });
+
+  it('should download if build has changed', function() {
+    path = temp.mkdirSync({suffix: '.html'});
+    fs.writeFileSync(`${path}/nightly.webkit.org.build`, '10');
+
+    return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
+        .then(() => {
+          let content = fs.readFileSync(`${path}/nightly.webkit.org`);
+          expect(content).to.match(/<html/);
+
+          content = fs.readFileSync(`${path}/nightly.webkit.org.build`, 'utf8');
+          expect(content).to.equal('1');
+        });
+  });
 });
