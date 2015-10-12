@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var Downloader = require('../lib');
+var downloader = require('../lib');
 
 if (process.argv.length !== 3) {
   console.log('Usage: browser-downloader targetDir');
@@ -7,7 +7,7 @@ if (process.argv.length !== 3) {
   process.exit(1);
 }
 
-Downloader.default(process.argv[2])
+downloader(process.argv[2])
     .then(() => console.log('done'))
     .catch(function(err) {
       console.log(err.stack);
