@@ -1,6 +1,7 @@
-import {findLatestFirefox, findNightlyFirefox, findNightlyWebkit} from './scrape';
+import {findLatestFirefox, findNightlyFirefox, findNightlyWebkit, findEdgeVM} from './scrape';
 import {download} from './download';
 import {extract as extractApp} from './app';
+import {extract as extractVM} from './vm';
 
 export default function(destination) {
   function logDownload(browser, url) {
@@ -14,6 +15,22 @@ export default function(destination) {
       return extractApp(dmgPath, destination);
     });
   }
+  function logDownloadVM(browser, url) {
+    return new Promise((resolve) => {
+      console.log(`Downloading ${browser} from ${url.url}`);
+      resolve();
+    })
+    .then(() => download(url, destination))
+    .then((zipPath) => {
+      // If we didn't download, then hope and assume that everything worked properly
+      if (!zipPath) {
+        return;
+      }
+
+      console.log(`Extracting ${zipPath} to ${destination}`);
+      return extractVM(zipPath, destination);
+    });
+  }
 
   return Promise.all([
     logDownload('Chrome', 'https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg'),
@@ -23,6 +40,9 @@ export default function(destination) {
     findNightlyFirefox()
       .then((latest) => logDownload('Firefox', latest)),
     findNightlyWebkit()
-      .then((latest) => logDownload('WebKit', latest))
+      .then((latest) => logDownload('WebKit', latest)),
+
+    findEdgeVM()
+      .then((latest) => logDownloadVM('edge', latest))
   ]);
 }
