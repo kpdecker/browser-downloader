@@ -4,15 +4,15 @@ import {extract as extractApp} from './app';
 
 export default function(destination) {
   function logDownload(browser, url) {
-      return new Promise((resolve) => {
-        console.log(`Downloading ${browser} from ${url}`);
-        resolve();
-      })
-      .then(() => download(url, destination))
-      .then((dmgPath) => {
-        console.log(`Extracting ${dmgPath} to ${destination}`);
-        return extractApp(dmgPath, destination);
-      });
+    return new Promise((resolve) => {
+      console.log(`Downloading ${browser} from ${url}`);
+      resolve();
+    })
+    .then(() => download(url, destination))
+    .then((dmgPath) => {
+      console.log(`Extracting ${dmgPath} to ${destination}`);
+      return extractApp(dmgPath, destination);
+    });
   }
 
   return Promise.all([
