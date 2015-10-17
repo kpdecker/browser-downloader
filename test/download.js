@@ -36,6 +36,7 @@ describe('downloader', function() {
   it('should download if build does not exist', function() {
     path = temp.mkdirSync({suffix: '.html'});
     return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
+        .then(() => Downloader.writeVersion({build: 1, url: 'http://nightly.webkit.org/'}, path))
         .then(() => {
           let content = fs.readFileSync(`${path}/nightly.webkit.org`);
           expect(content).to.match(/<html/);
@@ -50,6 +51,7 @@ describe('downloader', function() {
     fs.writeFileSync(`${path}/nightly.webkit.org.build`, '1');
 
     return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
+        .then(() => Downloader.writeVersion({build: 1, url: 'http://nightly.webkit.org/'}, path))
         .then(() => {
           expect(fs.existsSync(`${path}/nightly.webkit.org`)).to.be.false;
 
@@ -63,6 +65,7 @@ describe('downloader', function() {
     fs.writeFileSync(`${path}/nightly.webkit.org.build`, '10');
 
     return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
+        .then(() => Downloader.writeVersion({build: 1, url: 'http://nightly.webkit.org/'}, path))
         .then(() => {
           let content = fs.readFileSync(`${path}/nightly.webkit.org`);
           expect(content).to.match(/<html/);

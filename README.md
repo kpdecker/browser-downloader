@@ -11,6 +11,13 @@ Intended for use with cron scripts and other tasks to automate deployment.
 $ browser-downloader targetDir
 ```
 
+Will download all browser applications and validate that the modern.ie image is up to date.
+
+```
+$ browser-downloader vm targetDir
+```
+
+Will download and install the latest modern.ie VM image so it make be manually configured for testing.
 
 ## Prerequisites
 

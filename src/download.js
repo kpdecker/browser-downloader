@@ -9,8 +9,7 @@ export function download(url, destination) {
     return checkVersion(url, destination)
         .then((doIt) => {
           if (doIt) {
-            return download(url.url)
-              .then((outputFile) => writeVersion(url, destination, outputFile));
+            return download(url.url);
           }
         });
   } else {
@@ -37,7 +36,7 @@ export function download(url, destination) {
   }
 }
 
-function checkVersion({url, build}, destination) {
+export function checkVersion({url, build}, destination) {
   return new Promise((resolve, reject) => {
     destination = join(destination, `${basename(url)}.build`);
 
@@ -52,7 +51,7 @@ function checkVersion({url, build}, destination) {
   });
 }
 
-function writeVersion({url, build}, destination, outputFile) {
+export function writeVersion({url, build}, destination) {
   return new Promise((resolve, reject) => {
     destination = join(destination, `${basename(url)}.build`);
 
@@ -61,7 +60,7 @@ function writeVersion({url, build}, destination, outputFile) {
       if (err) {
         return reject(err);
       } else {
-        return resolve(outputFile);
+        return resolve();
       }
     });
   });
