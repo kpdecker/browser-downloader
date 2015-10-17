@@ -18,12 +18,12 @@ export function extract(zipFile) {
       .then(() => upgradeVM(vmx))
       .then(() => startVM(vmx))
       .then(() => cleanup(join(cwd, base)))
-      .then(() => stopVM(vmx));
+      .then(() => cleanup(zipFile));
 }
 
 function decompress(file, cwd) {
   return run(`7za -y x "${file}"`, {cwd})
-      .then((stdout) => (/Extracting *(.*\.ovf)/.exec(stdout) || [])[1]);
+      .then((stdout) => (/Extracting *(.*\.ovf)/.exec(stdout))[1]);
 }
 
 function stopVM(vmx) {
@@ -37,7 +37,7 @@ function deleteVM(vmx) {
 function cleanup(vmdir) {
   return new Promise((resolve, reject) => {
     rimraf(vmdir, function(err) {
-      /* istanbul ignore if */
+      /* istanbul ignore next */
       if (err && err.code !== 'ENOENT') {
         reject(err);
       } else {
@@ -58,16 +58,7 @@ function upgradeVM(vmx) {
 }
 
 function startVM(vmx) {
-  return run(`vmrun start "${vmx}"`)
-      // Introduce our own arbitrary wait as the Win10 VM seems to have issues when sending
-      // VMTools commands immediately after the first startup.
-      .then(() => delay(30 * 1000));
-}
-
-function delay(timeout) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout);
-  });
+  return run(`vmrun start "${vmx}"`);
 }
 
 function run(command, options) {
