@@ -6,7 +6,7 @@ export function extract(zipFile) {
   zipFile = resolve(zipFile);
 
   let cwd = dirname(zipFile),
-      base = 'MsEdge-Win10-VMware',
+      base = 'MsEdge-Win10TH2-VMware',
       vmDir = `${cwd}/`,
       vmx = join(vmDir, `${base}.vmwarevm`);
 
