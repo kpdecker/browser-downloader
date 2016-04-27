@@ -17,7 +17,7 @@ Will download all browser applications and validate that the modern.ie image is 
 $ browser-downloader vm targetDir
 ```
 
-Will download and install the latest modern.ie VM image so it make be manually configured for testing.
+Will download and install the latest modern.ie VM image so it may be manually configured for testing.
 
 ## Prerequisites
 
