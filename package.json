@@ -35,15 +35,16 @@
     "rimraf": "^2.4.3"
   },
   "devDependencies": {
+    "@kpdecker/linoleum": "^2.2.0",
+    "@kpdecker/linoleum-node": "^2.2.0",
     "chai": "^3.3.0",
     "gulp": "^3.9.0",
-    "linoleum": "projectrecall/linoleum",
     "sinon": "^1.17.1",
     "temp": "^0.8.3"
   },
   "eslintConfig": {
     "extends": [
-      "recall"
+      "@kpdecker/eslint-config-linoleum"
     ],
     "root": true
   }

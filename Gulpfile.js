@@ -1,14 +1,8 @@
-var Gulp = require('gulp');
+var Gulp = require('gulp'),
 
-// Init global state
-var Linoleum = require('linoleum');
+    Linoleum = require('@kpdecker/linoleum');
 
-// Include optional linoleum tasks
-require('linoleum/tasks/clean');
-require('linoleum/tasks/lint');
-require('linoleum/tasks/babel');
-require('linoleum/tasks/test');
-require('linoleum/tasks/cover');
+require('@kpdecker/linoleum-node');
 
 Gulp.task('build', ['clean', 'lint'], function(done) {
   Linoleum.runTask('babel', done);
