@@ -17,9 +17,9 @@ export function findNightlyFirefox() {
 }
 
 export function findNightlyWebkit() {
-  return loadDOM('http://nightly.webkit.org/builds/trunk/mac/1')
+  return loadDOM('https://webkit.org/nightly/archives/')
       .then(($) => {
-        return $('#archives a').attr('href');
+        return $('#search-results a').attr('href');
       });
 }
 
