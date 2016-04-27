@@ -20,9 +20,9 @@ describe('downloader', function() {
 
   it('should download file', function() {
     path = temp.mkdirSync({suffix: '.html'});
-    return Downloader.download('http://nightly.webkit.org/', path)
+    return Downloader.download('https://developer.apple.com/safari/download/', path)
         .then(() => {
-          let content = fs.readFileSync(`${path}/nightly.webkit.org`);
+          let content = fs.readFileSync(`${path}/download`);
           expect(content).to.match(/<html/);
         });
   });
@@ -35,13 +35,13 @@ describe('downloader', function() {
 
   it('should download if build does not exist', function() {
     path = temp.mkdirSync({suffix: '.html'});
-    return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
-        .then(() => Downloader.writeVersion({build: 1, url: 'http://nightly.webkit.org/'}, path))
+    return Downloader.download({build: 1, url: 'https://developer.apple.com/safari/download/'}, path)
+        .then(() => Downloader.writeVersion({build: 1, url: 'https://developer.apple.com/safari/download/'}, path))
         .then(() => {
-          let content = fs.readFileSync(`${path}/nightly.webkit.org`);
+          let content = fs.readFileSync(`${path}/download`);
           expect(content).to.match(/<html/);
 
-          content = fs.readFileSync(`${path}/nightly.webkit.org.build`, 'utf8');
+          content = fs.readFileSync(`${path}/download.build`, 'utf8');
           expect(content).to.equal('1');
         });
   });
@@ -64,13 +64,13 @@ describe('downloader', function() {
     path = temp.mkdirSync({suffix: '.html'});
     fs.writeFileSync(`${path}/nightly.webkit.org.build`, '10');
 
-    return Downloader.download({build: 1, url: 'http://nightly.webkit.org/'}, path)
-        .then(() => Downloader.writeVersion({build: 1, url: 'http://nightly.webkit.org/'}, path))
+    return Downloader.download({build: 1, url: 'https://developer.apple.com/safari/download/'}, path)
+        .then(() => Downloader.writeVersion({build: 1, url: 'https://developer.apple.com/safari/download/'}, path))
         .then(() => {
-          let content = fs.readFileSync(`${path}/nightly.webkit.org`);
+          let content = fs.readFileSync(`${path}/download`);
           expect(content).to.match(/<html/);
 
-          content = fs.readFileSync(`${path}/nightly.webkit.org.build`, 'utf8');
+          content = fs.readFileSync(`${path}/download.build`, 'utf8');
           expect(content).to.equal('1');
         });
   });
