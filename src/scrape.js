@@ -30,7 +30,7 @@ export function findEdgeVM() {
       })
       .then((json) => {
         let vmWare = json.softwareList.find((vm) => vm.softwareName === 'VMware'),
-            edge = vmWare.vms.find((vm) => vm.version === 'msedge'),
+            edge = vmWare.vms.find((vm) => vm.version === 'Microsoft Edge'),
             file = edge.files.find((file) => (/\.zip$/).test(file.name));
         return {
           build: edge.build,
