@@ -30,12 +30,12 @@ describe('vm', function() {
         .then(() => {
           let args = childProcess.exec.args.map((arg) => arg[0]);
           expect(args).to.eql([
-            `vmrun stop "${path}/foo/MsEdge-Win10-VMware.vmwarevm"`,
-            `vmrun deleteVM "${path}/foo/MsEdge-Win10-VMware.vmwarevm"`,
+            `vmrun stop "${path}/foo/MsEdge-Win10TH2-VMware.vmwarevm"`,
+            `vmrun deleteVM "${path}/foo/MsEdge-Win10TH2-VMware.vmwarevm"`,
             `7za -y x "${path}/foo/bar"`,
             `"/Applications/VMware OVF Tool/ovftool" -o "${path}/foo/foo.ovf" "${path}/foo/"`,
-            `vmrun upgradevm "${path}/foo/MsEdge-Win10-VMware.vmwarevm"`,
-            `vmrun start "${path}/foo/MsEdge-Win10-VMware.vmwarevm"`
+            `vmrun upgradevm "${path}/foo/MsEdge-Win10TH2-VMware.vmwarevm"`,
+            `vmrun start "${path}/foo/MsEdge-Win10TH2-VMware.vmwarevm"`
           ]);
         });
   });
