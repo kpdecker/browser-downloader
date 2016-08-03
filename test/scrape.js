@@ -27,7 +27,7 @@ describe('lookup', function() {
   it('should find edge vm link', function() {
     return Scrape.findEdgeVM()
         .then((latest) => {
-          expect(latest.build).to.match(/^201\d/);
+          expect(latest.build).to.match(/14\.\d/);
           expect(latest.url).to.match(/https?:\/\/.*msecnd.net\/.*\.zip/);
         });
   });

@@ -29,11 +29,11 @@ export function findEdgeVM() {
         return res.json();
       })
       .then((json) => {
-        let vmWare = json.softwareList.find((vm) => vm.softwareName === 'VMware'),
-            edge = vmWare.vms.find((vm) => vm.version === 'Microsoft Edge'),
-            file = edge.files.find((file) => (/\.zip$/).test(file.name));
+        let edge = json.find(({name}) => (/Microsoft Edge/.test(name))),
+            vmWare = edge.software.find(({name}) => (/VMware/.test(name))),
+            file = vmWare.files.find(({name}) => (/\.zip$/.test(name)));
         return {
-          build: edge.build,
+          build: edge.name,
           url: file.url
         };
       });
