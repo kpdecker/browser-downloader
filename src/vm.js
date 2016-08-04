@@ -78,6 +78,8 @@ function run(command, options) {
           && !(/The virtual machine cannot be found/.test(stdout))) {
         console.log(err, stdout, stderr);
         reject(err);
+      } else if (!stdout) {
+        reject(err || stderr || new Error('No output'));
       } else {
         resolve(stdout);
       }
