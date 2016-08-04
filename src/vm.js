@@ -23,7 +23,14 @@ export function extract(zipFile) {
 
 function decompress(file, cwd) {
   return run(`7za -y x "${file}"`, {cwd})
-      .then((stdout) => (/Extracting *(.*\.ovf)/.exec(stdout))[1]);
+      .then((stdout) => {
+        let match = (/Extracting *(.*\.ovf)/.exec(stdout));
+        if (match) {
+          return match[1];
+        } else {
+          throw new Error(`Unexpected decompress output: ${match}`);
+        }
+      });
 }
 
 function stopVM(vmx) {
