@@ -22,7 +22,7 @@ describe('vm', function() {
       if (/7za -y x/.test(command)) {
         callback(undefined, 'Extracting foo.ovf', '');
       } else {
-        callback(undefined, '', '');
+        callback(undefined, 'foo', '');
       }
     });
 
