@@ -7,12 +7,25 @@ export function findLatestFirefox() {
   return loadDOM('https://www.mozilla.org/en-US/firefox/new/?scene=2')
       .then(($) => {
         return $('.os_osx .download-link').attr('href');
+      })
+      .then((url) => {
+        if (!/https:\/\/download\.mozilla\.org\//.test(url)) {
+          throw new Error(`Unable to find firefox url: ${url}`);
+        }
+        return url;
       });
 }
 export function findNightlyFirefox() {
   return loadDOM('https://nightly.mozilla.org/')
       .then(($) => {
-        return $('#builds #Desktop .mac.first a').attr('href');
+        return $('#desktop-nightly-download [data-link-type="download"][data-display-name="OS X"][data-download-version="osx"][data-download-os="Desktop"]')
+          .attr('href');
+      })
+      .then((url) => {
+        if (!/https?:\/\/.*mozilla\.org\/.*\.dmg/.test(url)) {
+          throw new Error(`Unable to find firefox nightly url: ${url}`);
+        }
+        return url;
       });
 }
 
@@ -20,6 +33,12 @@ export function findNightlyWebkit() {
   return loadDOM('https://webkit.org/nightly/archives/')
       .then(($) => {
         return $('#search-results a').attr('href');
+      })
+      .then((url) => {
+        if (!/https?:\/\/.*webkit\.org\/.*\.dmg/.test(url)) {
+          throw new Error(`Unable to find webkit nightly url: ${url}`);
+        }
+        return url;
       });
 }
 
