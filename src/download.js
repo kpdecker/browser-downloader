@@ -51,6 +51,11 @@ export function download(url, destination) {
           response.body.pipe(output)
               .on('error', reject)
               .on('finish', () => {
+                let stat = fs.statSync(outputFile);
+                if (stat.size != length) {
+                  return reject(new Error(`Invalid length ${stat.size}. Expected ${length}`));
+                }
+
                 fs.writeFile(`${outputFile}.etag`, etag, (err) => {
                   if (err) {
                     reject(err);
