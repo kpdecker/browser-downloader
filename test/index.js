@@ -1,4 +1,4 @@
-import downloader, {installVM} from '../src';
+import downloader, {installEdgeVMs} from '../src';
 
 import * as App from '../src/app';
 import * as VM from '../src/vm';
@@ -40,7 +40,7 @@ describe('index', function() {
     this.stub(Download, 'writeVersion', () => Promise.resolve());
     this.stub(VM, 'extract', () => Promise.resolve());
 
-    return installVM()
+    return installEdgeVMs()
         .then(() => {
           expect(Download.writeVersion).to.have.been.called;
         });
@@ -51,7 +51,7 @@ describe('index', function() {
     this.stub(Download, 'writeVersion', () => Promise.resolve());
     this.stub(VM, 'extract', () => Promise.resolve());
 
-    return installVM()
+    return installEdgeVMs()
         .then(() => {
           throw new Error('Should have rejected');
         }, (err) => {

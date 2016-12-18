@@ -5,7 +5,7 @@ var destination = process.argv[2],
     action = downloader.default;
 if (process.argv.length === 4 && process.argv[2] === 'vm') {
   destination = process.argv[3];
-  action = downloader.installVM;
+  action = downloader.installEdgeVMs;
 } else if (process.argv.length !== 3) {
   console.log('Usage: browser-downloader [vm] targetDir');
   console.log(process.argv);

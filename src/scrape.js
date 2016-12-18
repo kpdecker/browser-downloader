@@ -48,13 +48,24 @@ export function findEdgeVM() {
         return res.json();
       })
       .then((json) => {
-        let edge = json.find(({name}) => (/Microsoft Edge/.test(name))),
-            vmWare = edge.software.find(({name}) => (/VMware/.test(name))),
-            file = vmWare.files.find(({name}) => (/\.zip$/.test(name)));
-        return {
-          build: edge.name,
-          url: file.url
-        };
+        json.forEach((entry) => {
+          entry.url = entry.software
+                .find(({name}) => /VMware/.test(name))
+                .files
+                .map(({url}) => url)
+                .find((url) => /\.zip$/.test(url));
+        });
+
+        return json
+            .filter(({name}) => /Edge/.test(name))
+            .map((entry) => {
+              let match = /(\S+) \((.*)\)/.exec(entry.name);
+
+              entry.branch = match[1].toLowerCase();
+              entry.build = match[2];
+
+              return entry;
+            });
       });
 }
 

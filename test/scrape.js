@@ -27,8 +27,11 @@ describe('lookup', function() {
   it('should find edge vm link', function() {
     return Scrape.findEdgeVM()
         .then((latest) => {
-          expect(latest.build).to.match(/14\.\d/);
-          expect(latest.url).to.match(/https?:\/\/.*msecnd.net\/.*\.zip/);
+          latest.forEach((latest) => {
+            expect(latest.branch).to.match(/preview|stable/);
+            expect(latest.build).to.match(/^1[45],*/);
+            expect(latest.url).to.match(/https?:\/\/.*msecnd.net\/.*\.zip/);
+          });
         });
   });
 });

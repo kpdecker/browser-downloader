@@ -6,29 +6,26 @@ export function extract(zipFile) {
   zipFile = resolve(zipFile);
 
   let cwd = dirname(zipFile),
-      base = 'MsEdge-Win10TH2-VMware',
+      base = 'MSEdge - Win10_preview',
       vmDir = `${cwd}/`,
-      vmx = join(vmDir, `${base}.vmwarevm`);
+      vmx = join(vmDir, `${base}.vmx`);
 
   return stopVM(vmx)
       .then(() => deleteVM(vmx))
       .then(() => cleanup(join(cwd, base)))
       .then(() => decompress(zipFile, cwd))
-      .then((ovfFile) => initVM(join(cwd, ovfFile), vmDir))
-      .then(() => upgradeVM(vmx))
-      .then(() => startVM(vmx))
-      .then(() => cleanup(join(cwd, base)))
-      .then(() => cleanup(zipFile));
+      .then(() => cleanup(zipFile))
+      .then(() => cleanup(`${zipFile}.etag`));
 }
 
 function decompress(file, cwd) {
   return run(`7za -y x "${file}"`, {cwd})
       .then((stdout) => {
-        let match = (/Extracting *(.*\.ovf)/.exec(stdout));
+        let match = (/Extracting *(.*\.vmx)/.exec(stdout));
         if (match) {
           return match[1];
         } else {
-          throw new Error(`Unexpected decompress output: ${match}`);
+          throw new Error(`Unexpected decompress output: ${stdout}`);
         }
       });
 }
@@ -52,20 +49,6 @@ function cleanup(vmdir) {
       }
     });
   });
-}
-
-function initVM(ovfFile, dir) {
-  console.log('Installing vm');
-  return run(`"/Applications/VMware OVF Tool/ovftool" -o "${ovfFile}" "${dir}"`);
-}
-
-function upgradeVM(vmx) {
-  console.log('Upgrading vm');
-  return run(`vmrun upgradevm "${vmx}"`);
-}
-
-function startVM(vmx) {
-  return run(`vmrun start "${vmx}"`);
 }
 
 function run(command, options) {
