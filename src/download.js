@@ -52,7 +52,8 @@ export function download(url, destination) {
               .on('error', reject)
               .on('finish', () => {
                 let stat = fs.statSync(outputFile);
-                if (stat.size != length) {
+                if (length != null && stat.size != length) {
+                  console.log(response.headers);
                   return reject(new Error(`Invalid length ${stat.size}. Expected ${length}`));
                 }
 
