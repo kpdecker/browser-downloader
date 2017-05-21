@@ -16,16 +16,9 @@ export function findLatestFirefox() {
       });
 }
 export function findNightlyFirefox() {
-  return loadDOM('https://nightly.mozilla.org/')
-      .then(($) => {
-        return $('#desktop-nightly-download [data-link-type="download"][data-display-name="OS X"][data-download-version="osx"][data-download-os="Desktop"]')
-          .attr('href');
-      })
-      .then((url) => {
-        if (!/https?:\/\/.*mozilla\.org\/.*\.dmg/.test(url)) {
-          throw new Error(`Unable to find firefox nightly url: ${url}`);
-        }
-        return url;
+  return fetch('https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=osx&lang=en-US', {redirect: 'manual'})
+      .then((res) => {
+        return res.headers.get('location');
       });
 }
 

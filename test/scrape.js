@@ -11,7 +11,7 @@ describe('lookup', function() {
   });
   it('should find nightly firefox link', function() {
     return Scrape.findNightlyFirefox()
-        .then((latest) => expect(latest).to.match(/https?:\/\/.*mozilla\.org\/.*\.dmg/));
+        .then((latest) => expect(latest).to.match(/https?:\/\/.*mozilla\.(org|net)\/.*\.dmg/));
   });
   it('should find nightly webkit link', function() {
     return Scrape.findNightlyWebkit()
