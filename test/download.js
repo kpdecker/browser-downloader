@@ -27,6 +27,7 @@ describe('downloader', function() {
         });
   });
   it('should handle download errors', function() {
+    path = temp.mkdirSync({suffix: '.html'});
     this.stub(global, 'fetch', () => Promise.resolve({status: 500}));
     return Downloader.download('http://nightly.webkit.org/', path)
         .then(() => { throw new Error('failed'); })
